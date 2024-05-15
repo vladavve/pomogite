@@ -1,6 +1,8 @@
 package com.example.pomogite;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -13,6 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_YEAR = "year";
 
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
     }
@@ -22,14 +25,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE users (" + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME
-                + " TEXT, " + COLUMN_YEAR + " INTEGER);");
+                + " TEXT, " + COLUMN_YEAR + " TEXT);");
         // добавление начальных данных
         db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ") VALUES ('Том Смит', 1981);");
+                + ", " + COLUMN_YEAR  + ") VALUES ('Hello', 'Привет');");
+
+
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE);
         onCreate(db);
     }
+
+
+
+
+
+
 }

@@ -45,7 +45,7 @@ public class UserActivity extends AppCompatActivity {
                     DatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(userId)});
             userCursor.moveToFirst();
             nameBox.setText(userCursor.getString(1));
-            yearBox.setText(String.valueOf(userCursor.getInt(2)));
+            yearBox.setText(userCursor.getInt(2));
             userCursor.close();
         } else {
             // скрываем кнопку удаления
@@ -56,7 +56,7 @@ public class UserActivity extends AppCompatActivity {
     public void save(View view){
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COLUMN_NAME, nameBox.getText().toString());
-        cv.put(DatabaseHelper.COLUMN_YEAR, Integer.parseInt(yearBox.getText().toString()));
+        cv.put(DatabaseHelper.COLUMN_YEAR, yearBox.getText().toString());
 
         if (userId > 0) {
             db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_ID + "=" + userId, null);

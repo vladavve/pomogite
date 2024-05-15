@@ -1,7 +1,12 @@
 package com.example.pomogite;
 
+import static com.example.pomogite.DatabaseHelper.COLUMN_ID;
+import static com.example.pomogite.DatabaseHelper.COLUMN_NAME;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,25 +42,10 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(getApplicationContext());
     }
 
-    public void onClick(View view){
-        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("app.db", MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS users (name TEXT, age INTEGER, UNIQUE(name))");
-        db.execSQL("INSERT OR IGNORE INTO users VALUES ('Tom Smith', 23), ('John Dow', 31);");
 
-        Cursor query = db.rawQuery("SELECT * FROM users;", null);
-        TextView textView = findViewById(R.id.textView);
-        textView.setText("");
-        while(query.moveToNext()){
-            String name = query.getString(0);
-            int age = query.getInt(1);
-            textView.append("Name: " + name + " Age: " + age + "\n");
-        }
-        query.close();
-        db.close();
-    }
 
     public void onClick2(View view){
-            Intent intent = new Intent(view.getContext(), MainActivity2.class);
+            Intent intent = new Intent(view.getContext(), HomeActivity.class);
             startActivity(intent);
     }
 
@@ -68,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         //получаем данные из бд в виде курсора
         userCursor = db.rawQuery("select * from " + DatabaseHelper.TABLE, null);
         // определяем, какие столбцы из курсора будут выводиться в ListView
-        String[] headers = new String[]{DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR};
+        String[] headers = new String[]{COLUMN_NAME, DatabaseHelper.COLUMN_YEAR};
         // создаем адаптер, передаем в него курсор
         userAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item,
                 userCursor, headers, new int[]{android.R.id.text1, android.R.id.text2}, 0);
@@ -88,4 +78,6 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         userCursor.close();
     }
+
+
 }
